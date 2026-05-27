@@ -3,3 +3,8 @@ tensorflow==2.20.0
 numpy
 pillow
 plotly
+opencv-python
+matplotlib
+seaborn
+pyspark
+scikit-learn
