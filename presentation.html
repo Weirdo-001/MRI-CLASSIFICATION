@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,8 @@
             --border: #1a2d4d;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -95,13 +97,25 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(6px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(6px);
+            }
         }
 
         .title-section {
@@ -221,12 +235,29 @@
             text-align: left;
         }
 
-        .card:nth-child(1) { animation-delay: 0.03s; }
-        .card:nth-child(2) { animation-delay: 0.06s; }
-        .card:nth-child(3) { animation-delay: 0.09s; }
-        .card:nth-child(4) { animation-delay: 0.12s; }
-        .card:nth-child(5) { animation-delay: 0.15s; }
-        .card:nth-child(6) { animation-delay: 0.18s; }
+        .card:nth-child(1) {
+            animation-delay: 0.03s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.06s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.09s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.12s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.15s;
+        }
+
+        .card:nth-child(6) {
+            animation-delay: 0.18s;
+        }
 
         .card:hover {
             border-color: var(--accent);
@@ -322,18 +353,53 @@
             animation: fadeInUp 0.4s ease-out backwards;
         }
 
-        .step:nth-child(1) { animation-delay: 0.02s; }
-        .step:nth-child(2) { animation-delay: 0.04s; }
-        .step:nth-child(3) { animation-delay: 0.06s; }
-        .step:nth-child(4) { animation-delay: 0.08s; }
-        .step:nth-child(5) { animation-delay: 0.1s; }
-        .step:nth-child(6) { animation-delay: 0.12s; }
-        .step:nth-child(7) { animation-delay: 0.14s; }
-        .step:nth-child(8) { animation-delay: 0.16s; }
-        .step:nth-child(9) { animation-delay: 0.18s; }
-        .step:nth-child(10) { animation-delay: 0.2s; }
-        .step:nth-child(11) { animation-delay: 0.22s; }
-        .step:nth-child(12) { animation-delay: 0.24s; }
+        .step:nth-child(1) {
+            animation-delay: 0.02s;
+        }
+
+        .step:nth-child(2) {
+            animation-delay: 0.04s;
+        }
+
+        .step:nth-child(3) {
+            animation-delay: 0.06s;
+        }
+
+        .step:nth-child(4) {
+            animation-delay: 0.08s;
+        }
+
+        .step:nth-child(5) {
+            animation-delay: 0.1s;
+        }
+
+        .step:nth-child(6) {
+            animation-delay: 0.12s;
+        }
+
+        .step:nth-child(7) {
+            animation-delay: 0.14s;
+        }
+
+        .step:nth-child(8) {
+            animation-delay: 0.16s;
+        }
+
+        .step:nth-child(9) {
+            animation-delay: 0.18s;
+        }
+
+        .step:nth-child(10) {
+            animation-delay: 0.2s;
+        }
+
+        .step:nth-child(11) {
+            animation-delay: 0.22s;
+        }
+
+        .step:nth-child(12) {
+            animation-delay: 0.24s;
+        }
 
         .step-number {
             width: 36px;
@@ -566,21 +632,50 @@
         }
 
         @media (max-width: 1600px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .grid-4 { grid-template-columns: repeat(2, 1fr); }
-            .achievement-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .achievement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 900px) {
-            .title-main { font-size: 32px; }
-            .slide-title { font-size: 28px; }
-            .slide-content { padding: 15px 20px; }
-            .flow-box { width: 200px; font-size: 9px; }
-            .grid-4 { grid-template-columns: 1fr; }
-            .achievement-grid { grid-template-columns: 1fr; }
+            .title-main {
+                font-size: 32px;
+            }
+
+            .slide-title {
+                font-size: 28px;
+            }
+
+            .slide-content {
+                padding: 15px 20px;
+            }
+
+            .flow-box {
+                width: 200px;
+                font-size: 9px;
+            }
+
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="presentation">
         <!-- SLIDE 1: TITLE -->
@@ -590,11 +685,29 @@
                     <div class="title-emoji">🧠</div>
                     <h1 class="title-main">Brain Tumor MRI Classifier</h1>
                     <h2 class="title-sub">Cloud & DevOps Deployment</h2>
-                    <div class="title-highlight">AWS EC2 • Streamlit • TensorFlow • Production Pipeline</div>
-                    
+                    <div class="title-highlight">AWS EC2 & Streamlit Cloud • TensorFlow & Grad-CAM • PySpark • DevOps
+                    </div>
+
                     <div class="author-card">
                         <div class="author-name">Aarushi Sharma</div>
                         <div class="author-roll">Roll: 2310990258 | Cloud & DevOps Focus | Final Evaluation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 1.5: ARCHITECTURE DIAGRAM -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="container">
+                    <h2 class="slide-title">🗺️ System Architecture Diagram</h2>
+                    <div
+                        style="width: 100%; height: 60vh; background: rgba(20, 33, 63, 0.6); border: 2px dashed var(--accent); border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🖼️</div>
+                        <div style="color: var(--text-secondary); font-size: 16px;">[ Insert High-Level Architecture
+                            Diagram Here ]</div>
+                        <div style="color: var(--text-muted); font-size: 12px; margin-top: 10px;">Suggested: User ->
+                            Streamlit Cloud / EC2 -> TF Model (Grad-CAM) -> Results</div>
                     </div>
                 </div>
             </div>
@@ -605,13 +718,15 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">📌 Project Architecture Overview</h2>
-                    
+
                     <div class="grid-2">
                         <div class="card">
                             <div class="card-icon">🎯</div>
                             <div class="card-title">ML Model Component</div>
                             <div class="card-text">
-                                <strong>EfficientNet-B3</strong> transfer learning model trained on brain MRI dataset. Classifies into 4 categories: Glioma, Meningioma, Pituitary, No Tumor. <strong>87.5% accuracy</strong> achieved through two-phase fine-tuning on 300×300 images.
+                                <strong>EfficientNet-B3</strong> transfer learning model trained on brain MRI dataset.
+                                Classifies into 4 categories: Glioma, Meningioma, Pituitary, No Tumor. <strong>87.5%
+                                    accuracy</strong> achieved through two-phase fine-tuning on 300×300 images.
                             </div>
                         </div>
 
@@ -619,7 +734,9 @@
                             <div class="card-icon">🌐</div>
                             <div class="card-title">Frontend Application</div>
                             <div class="card-text">
-                                <strong>Streamlit</strong> interactive web app with modern dark theme. Features: Real-time MRI upload, instant prediction, Plotly visualizations (gauges, radar charts), clinical insights, and responsive dashboard for medical professionals.
+                                <strong>Streamlit</strong> interactive web app with modern dark theme. Features:
+                                Real-time MRI upload, instant prediction, Plotly visualizations (gauges, radar charts),
+                                clinical insights, and responsive dashboard for medical professionals.
                             </div>
                         </div>
 
@@ -627,7 +744,9 @@
                             <div class="card-icon">☁️</div>
                             <div class="card-title">Cloud Infrastructure</div>
                             <div class="card-text">
-                                <strong>AWS EC2 t3.medium</strong> instance (2 vCPU, 4GB RAM) on Amazon Linux 2023. Elastic IP (98.84.64.42) for stable public access. Security groups configured for SSH, HTTP, HTTPS, and port 8501.
+                                <strong>AWS EC2 t3.medium</strong> instance (2 vCPU, 4GB RAM) on Amazon Linux 2023.
+                                Elastic IP (98.84.64.42) for stable public access. Security groups configured for SSH,
+                                HTTP, HTTPS, and port 8501.
                             </div>
                         </div>
 
@@ -635,7 +754,9 @@
                             <div class="card-icon">🚀</div>
                             <div class="card-title">DevOps Pipeline</div>
                             <div class="card-text">
-                                <strong>GitHub → EC2 → Python Environment → Streamlit</strong>. Version control, automated SSH deployment, virtual environment isolation, background persistence with nohup for 24/7 availability.
+                                <strong>GitHub → EC2 → Python Environment → Streamlit</strong>. Version control,
+                                automated SSH deployment, virtual environment isolation, background persistence with
+                                nohup for 24/7 availability.
                             </div>
                         </div>
                     </div>
@@ -648,7 +769,7 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">🏗️ Complete System Architecture Flow</h2>
-                    
+
                     <div class="flow-diagram">
                         <div class="flow-box">👤 User Browser (Client)</div>
                         <div class="flow-arrow">↓ HTTP/HTTPS</div>
@@ -666,19 +787,23 @@
                     <div class="grid-4">
                         <div class="card" style="padding: 12px;">
                             <div class="card-title" style="font-size: 11px;">🎨 Frontend</div>
-                            <div class="card-text" style="font-size: 9px;">Streamlit UI • Dark Theme • Real-time UI • Interactive Charts</div>
+                            <div class="card-text" style="font-size: 9px;">Streamlit UI • Dark Theme • Real-time UI •
+                                Interactive Charts</div>
                         </div>
                         <div class="card" style="padding: 12px;">
                             <div class="card-title" style="font-size: 11px;">⚙️ Backend</div>
-                            <div class="card-text" style="font-size: 9px;">Python 3.9 • Flask Server • Request Handling • API Routes</div>
+                            <div class="card-text" style="font-size: 9px;">Python 3.9 • Flask Server • Request Handling
+                                • API Routes</div>
                         </div>
                         <div class="card" style="padding: 12px;">
                             <div class="card-title" style="font-size: 11px;">🤖 ML Layer</div>
-                            <div class="card-text" style="font-size: 9px;">TensorFlow • Keras Model • Real-time Inference • Model Caching</div>
+                            <div class="card-text" style="font-size: 9px;">TensorFlow • Keras Model • Real-time
+                                Inference • Model Caching</div>
                         </div>
                         <div class="card" style="padding: 12px;">
                             <div class="card-title" style="font-size: 11px;">☁️ Infrastructure</div>
-                            <div class="card-text" style="font-size: 9px;">AWS EC2 • Elastic IP • Security Groups • nohup Daemon</div>
+                            <div class="card-text" style="font-size: 9px;">AWS EC2 • Elastic IP • Security Groups •
+                                nohup Daemon</div>
                         </div>
                     </div>
                 </div>
@@ -690,15 +815,17 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">📦 Deployment Steps: Part 1-3</h2>
-                    
+
                     <div class="deployment-box">
                         <div class="section-header">📤 Part 1: GitHub Repository Setup</div>
-                        
+
                         <div class="step">
                             <div class="step-number">1</div>
                             <div class="step-content">
                                 <div class="step-title">Initialize & Commit Project</div>
-                                <div class="step-detail"><span class="code-block">git init</span> <span class="code-block">git add .</span> <span class="code-block">git commit -m "Deploy Brain Tumor"</span></div>
+                                <div class="step-detail"><span class="code-block">git init</span> <span
+                                        class="code-block">git add .</span> <span class="code-block">git commit -m
+                                        "Deploy Brain Tumor"</span></div>
                             </div>
                         </div>
 
@@ -706,7 +833,9 @@
                             <div class="step-number">2</div>
                             <div class="step-content">
                                 <div class="step-title">Create & Connect GitHub Repo</div>
-                                <div class="step-detail">Repo: <span class="code-block">MRI-CLASSIFICATION</span> GitHub: <span class="code-block">github.com/Weirdo-001/MRI-CLASSIFICATION.git</span> Push: <span class="code-block">git push -u origin main</span></div>
+                                <div class="step-detail">Repo: <span class="code-block">MRI-CLASSIFICATION</span>
+                                    GitHub: <span class="code-block">github.com/Weirdo-001/MRI-CLASSIFICATION.git</span>
+                                    Push: <span class="code-block">git push -u origin main</span></div>
                             </div>
                         </div>
 
@@ -716,7 +845,10 @@
                             <div class="step-number">3</div>
                             <div class="step-content">
                                 <div class="step-title">Launch EC2 Instance</div>
-                                <div class="step-detail"><strong>OS:</strong> Amazon Linux 2023 • <strong>Type:</strong> t3.medium (2 vCPU, 4GB) • <strong>Storage:</strong> 20GB EBS • <strong>Status:</strong> Running</div>
+                                <div class="step-detail"><strong>OS:</strong> Amazon Linux 2023 • <strong>Type:</strong>
+                                    t3.medium (2 vCPU, 4GB) • <strong>Storage:</strong> 20GB EBS •
+                                    <strong>Status:</strong> Running
+                                </div>
                             </div>
                         </div>
 
@@ -724,7 +856,8 @@
                             <div class="step-number">4</div>
                             <div class="step-content">
                                 <div class="step-title">Configure Security & Key Pair</div>
-                                <div class="step-detail">Key: <span class="code-block">mri.pem</span> | Security Groups: SSH (22), HTTP (80), HTTPS (443), TCP (8501) from 0.0.0.0/0</div>
+                                <div class="step-detail">Key: <span class="code-block">mri.pem</span> | Security Groups:
+                                    SSH (22), HTTP (80), HTTPS (443), TCP (8501) from 0.0.0.0/0</div>
                             </div>
                         </div>
 
@@ -734,7 +867,9 @@
                             <div class="step-number">5</div>
                             <div class="step-content">
                                 <div class="step-title">Allocate & Associate Elastic IP</div>
-                                <div class="step-detail">Dashboard → Elastic IPs → Allocate. Associate with t3.medium. <strong>IP:</strong> <span class="code-block">98.84.64.42</span></div>
+                                <div class="step-detail">Dashboard → Elastic IPs → Allocate. Associate with t3.medium.
+                                    <strong>IP:</strong> <span class="code-block">98.84.64.42</span>
+                                </div>
                             </div>
                         </div>
 
@@ -742,7 +877,8 @@
                             <div class="step-number">6</div>
                             <div class="step-content">
                                 <div class="step-title">SSH into EC2 Instance</div>
-                                <div class="step-detail">PowerShell: <span class="code-block">ssh -i "mri.pem" ec2-user@98.84.64.42</span></div>
+                                <div class="step-detail">PowerShell: <span class="code-block">ssh -i "mri.pem"
+                                        ec2-user@98.84.64.42</span></div>
                             </div>
                         </div>
                     </div>
@@ -755,15 +891,17 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">🔌 Deployment Steps: Part 4-6</h2>
-                    
+
                     <div class="deployment-box">
                         <div class="section-header">🐍 Part 4: Environment Setup on EC2</div>
-                        
+
                         <div class="step">
                             <div class="step-number">7</div>
                             <div class="step-content">
                                 <div class="step-title">Update System & Install Software</div>
-                                <div class="step-detail"><span class="code-block">sudo dnf update -y</span> Install: <span class="code-block">sudo dnf install python3 python3-pip git -y</span></div>
+                                <div class="step-detail"><span class="code-block">sudo dnf update -y</span> Install:
+                                    <span class="code-block">sudo dnf install python3 python3-pip git -y</span>
+                                </div>
                             </div>
                         </div>
 
@@ -771,7 +909,11 @@
                             <div class="step-number">8</div>
                             <div class="step-content">
                                 <div class="step-title">Clone GitHub Repo & Setup Environment</div>
-                                <div class="step-detail"><span class="code-block">git clone https://github.com/Weirdo-001/MRI-CLASSIFICATION.git</span> <span class="code-block">cd MRI-CLASSIFICATION</span> <span class="code-block">python3 -m venv venv</span> <span class="code-block">source venv/bin/activate</span></div>
+                                <div class="step-detail"><span class="code-block">git clone
+                                        https://github.com/Weirdo-001/MRI-CLASSIFICATION.git</span> <span
+                                        class="code-block">cd MRI-CLASSIFICATION</span> <span class="code-block">python3
+                                        -m venv venv</span> <span class="code-block">source venv/bin/activate</span>
+                                </div>
                             </div>
                         </div>
 
@@ -779,7 +921,10 @@
                             <div class="step-number">9</div>
                             <div class="step-content">
                                 <div class="step-title">Install Dependencies (Critical Versions)</div>
-                                <div class="step-detail"><span class="code-block">pip install "numpy<2"</span> <span class="code-block">pip install tensorflow==2.16.1</span> <span class="code-block">pip install streamlit plotly pillow pandas matplotlib seaborn scikit-learn opencv-python</span></div>
+                                <div class="step-detail"><span class="code-block">pip install "numpy<2"< /span> <span
+                                                class="code-block">pip install tensorflow==2.16.1</span> <span
+                                                class="code-block">pip install streamlit plotly pillow pandas matplotlib
+                                                seaborn scikit-learn opencv-python</span></div>
                             </div>
                         </div>
 
@@ -789,7 +934,9 @@
                             <div class="step-number">10</div>
                             <div class="step-content">
                                 <div class="step-title">Start Streamlit Server</div>
-                                <div class="step-detail"><span class="code-block">streamlit run app.py --server.port 8501 --server.address 0.0.0.0</span> Access: <span class="code-block">http://98.84.64.42:8501</span></div>
+                                <div class="step-detail"><span class="code-block">streamlit run app.py --server.port
+                                        8501 --server.address 0.0.0.0</span> Access: <span
+                                        class="code-block">http://98.84.64.42:8501</span></div>
                             </div>
                         </div>
 
@@ -799,7 +946,8 @@
                             <div class="step-number">11</div>
                             <div class="step-content">
                                 <div class="step-title">Enable nohup for Background Execution</div>
-                                <div class="step-detail">CTRL+C to stop. Then: <span class="code-block">nohup streamlit run app.py --server.port 8501 --server.address 0.0.0.0 &</span></div>
+                                <div class="step-detail">CTRL+C to stop. Then: <span class="code-block">nohup streamlit
+                                        run app.py --server.port 8501 --server.address 0.0.0.0 &</span></div>
                             </div>
                         </div>
 
@@ -807,11 +955,14 @@
                             <div class="step-number">12</div>
                             <div class="step-content">
                                 <div class="step-title">Monitor & Manage Application</div>
-                                <div class="step-detail">Status: <span class="code-block">ps aux | grep streamlit</span> Logs: <span class="code-block">tail -f nohup.out</span> Stop: <span class="code-block">pkill streamlit</span></div>
+                                <div class="step-detail">Status: <span class="code-block">ps aux | grep streamlit</span>
+                                    Logs: <span class="code-block">tail -f nohup.out</span> Stop: <span
+                                        class="code-block">pkill streamlit</span></div>
                             </div>
                         </div>
 
-                        <div class="workflow-item">✅ Result: App runs 24/7 at 98.84.64.42:8501 even after SSH disconnect!</div>
+                        <div class="workflow-item">✅ Result: App runs 24/7 at 98.84.64.42:8501 even after SSH
+                            disconnect!</div>
                     </div>
                 </div>
             </div>
@@ -822,13 +973,14 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">⚙️ DevOps Pipeline & Architecture</h2>
-                    
+
                     <div class="grid-3 compact-grid">
                         <div class="card">
                             <div class="card-icon">📝</div>
                             <div class="card-title">Version Control</div>
                             <div class="card-text">
-                                <strong>GitHub</strong> as single source of truth. Code versioning, rollback capability, collaborative development, secure backups, branch management.
+                                <strong>GitHub</strong> as single source of truth. Code versioning, rollback capability,
+                                collaborative development, secure backups, branch management.
                             </div>
                         </div>
 
@@ -836,7 +988,8 @@
                             <div class="card-icon">🏗️</div>
                             <div class="card-title">Infrastructure as Code</div>
                             <div class="card-text">
-                                <strong>AWS EC2</strong> with predefined configuration. Elastic IP for stable DNS. Security groups restrict access. Reproducible infrastructure, scalable architecture.
+                                <strong>AWS EC2</strong> with predefined configuration. Elastic IP for stable DNS.
+                                Security groups restrict access. Reproducible infrastructure, scalable architecture.
                             </div>
                         </div>
 
@@ -844,7 +997,8 @@
                             <div class="card-icon">🔄</div>
                             <div class="card-title">CI/CD Pipeline</div>
                             <div class="card-text">
-                                <strong>Git → SSH → Clone → Venv → Install → Run</strong>. Automated deployment workflow. nohup ensures zero-downtime operation. Comprehensive logging.
+                                <strong>Git → SSH → Clone → Venv → Install → Run</strong>. Automated deployment
+                                workflow. nohup ensures zero-downtime operation. Comprehensive logging.
                             </div>
                         </div>
 
@@ -852,7 +1006,8 @@
                             <div class="card-icon">🔐</div>
                             <div class="card-title">Security Implementation</div>
                             <div class="card-text">
-                                SSH key-based auth (mri.pem). Security groups restrict port access. Private model on EC2. Environment variables for secrets. No exposed credentials.
+                                SSH key-based auth (mri.pem). Security groups restrict port access. Private model on
+                                EC2. Environment variables for secrets. No exposed credentials.
                             </div>
                         </div>
 
@@ -860,7 +1015,8 @@
                             <div class="card-icon">📡</div>
                             <div class="card-title">Networking & Routing</div>
                             <div class="card-text">
-                                Elastic IP for persistent DNS (98.84.64.42). Port 8501 configured. Direct HTTP/HTTPS routing. Multi-region capable. Global accessibility.
+                                Elastic IP for persistent DNS (98.84.64.42). Port 8501 configured. Direct HTTP/HTTPS
+                                routing. Multi-region capable. Global accessibility.
                             </div>
                         </div>
 
@@ -868,7 +1024,8 @@
                             <div class="card-icon">📊</div>
                             <div class="card-title">Monitoring & Logs</div>
                             <div class="card-text">
-                                nohup.out captures application logs. Process monitoring via ps. SSH health checks. Real-time state visibility. Alert-ready architecture.
+                                nohup.out captures application logs. Process monitoring via ps. SSH health checks.
+                                Real-time state visibility. Alert-ready architecture.
                             </div>
                         </div>
                     </div>
@@ -881,7 +1038,7 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">🧠 ML Model & Training Pipeline</h2>
-                    
+
                     <div class="grid-2">
                         <div class="card">
                             <div class="card-icon">🏗️</div>
@@ -921,47 +1078,117 @@
             </div>
         </div>
 
+        <!-- SLIDE 7.1: EXPLAINABLE AI (GRAD-CAM) -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="container">
+                    <h2 class="slide-title">🔥 Explainable AI: Grad-CAM</h2>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-icon">🔍</div>
+                            <div class="card-title">Why Grad-CAM?</div>
+                            <div class="card-text">
+                                Medical AI needs transparency. Grad-CAM (Gradient-weighted Class Activation Mapping)
+                                highlights the exact regions in the MRI that led to the model's prediction, building
+                                trust with healthcare professionals by eliminating the "black box" effect.
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-icon">⚙️</div>
+                            <div class="card-title">Technical Implementation</div>
+                            <div class="card-text">
+                                Extracts gradients from the <strong>top_conv</strong> layer of EfficientNet-B3. We apply
+                                a gradient tape to watch the input tensor, compute partial derivatives, apply
+                                power-normalization to emphasize the hottest activation zones, and overlay a Jet
+                                colormap on the original MRI via OpenCV/PIL.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7.2: PYSPARK DATA PIPELINE -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="container">
+                    <h2 class="slide-title">⚡ Big Data Processing: PySpark</h2>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-icon">📈</div>
+                            <div class="card-title">Data Inventory & Analytics</div>
+                            <div class="card-text">
+                                Built a PySpark pipeline for handling large-scale medical datasets. It processes image
+                                metadata and performs exploratory data analysis (class distribution, file validation,
+                                corrupt image detection) seamlessly.
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-icon">🛠️</div>
+                            <div class="card-title">Distributed Technical Stack</div>
+                            <div class="card-text">
+                                Uses <strong>Apache Spark (PySpark)</strong> with a Java (OpenJDK) backend deployed on
+                                our AWS EC2 instance. This architecture is designed to scale effortlessly if the
+                                diagnostic dataset grows from thousands of MRIs to millions, ensuring enterprise-grade
+                                scalability.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SLIDE 8: FEATURES -->
         <div class="slide compact">
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">✨ Application Features & Capabilities</h2>
-                    
+
                     <div class="grid-3 compact-grid">
                         <div class="card">
                             <div class="card-icon">📤</div>
                             <div class="card-title">Real-Time Upload</div>
-                            <div class="card-text">Drag-drop MRI scan upload with instant AI classification and results display.</div>
+                            <div class="card-text">Drag-drop MRI scan upload with instant AI classification and results
+                                display.</div>
                         </div>
 
                         <div class="card">
                             <div class="card-icon">📊</div>
                             <div class="card-title">Interactive Visualizations</div>
-                            <div class="card-text">Plotly gauges, radar charts, confidence metrics, and probability distributions.</div>
+                            <div class="card-text">Plotly gauges, radar charts, confidence metrics, and probability
+                                distributions.</div>
                         </div>
 
                         <div class="card">
                             <div class="card-icon">🔬</div>
                             <div class="card-title">Clinical Insights</div>
-                            <div class="card-text">Tumor symptoms, treatment options, prevalence rates, survival statistics.</div>
+                            <div class="card-text">Tumor symptoms, treatment options, prevalence rates, survival
+                                statistics.</div>
                         </div>
 
                         <div class="card">
                             <div class="card-icon">🎨</div>
                             <div class="card-title">Dark Theme UI</div>
-                            <div class="card-text">Professional modern design, cyan accents, smooth animations, responsive layout.</div>
+                            <div class="card-text">Professional modern design, cyan accents, smooth animations,
+                                responsive layout.</div>
                         </div>
 
                         <div class="card">
                             <div class="card-icon">⚡</div>
                             <div class="card-title">Optimized Performance</div>
-                            <div class="card-text">Model caching, GPU optimization, sub-second inference, efficient resource usage.</div>
+                            <div class="card-text">Model caching, GPU optimization, sub-second inference, efficient
+                                resource usage.</div>
                         </div>
 
                         <div class="card">
                             <div class="card-icon">🛡️</div>
                             <div class="card-title">Data Security</div>
-                            <div class="card-text">On-server processing only, no cloud image storage, secure inference pipeline.</div>
+                            <div class="card-text">On-server processing only, no cloud image storage, secure inference
+                                pipeline.</div>
                         </div>
                     </div>
 
@@ -992,15 +1219,19 @@
             <div class="slide-content">
                 <div class="container">
                     <h2 class="slide-title">🚀 Deployment Complete & Live</h2>
-                    
+
                     <p style="font-size: 12px; color: var(--text-secondary); margin: 15px 0 25px 0; max-width: 950px;">
-                        The Brain Tumor MRI Classifier has been successfully deployed on <strong>AWS EC2</strong> and is now <strong>publicly accessible</strong>. The complete DevOps pipeline from GitHub to production has been implemented with professional-grade architecture, security, and monitoring.
+                        The Brain Tumor MRI Classifier has been successfully deployed on <strong>AWS EC2</strong> and
+                        <strong>Streamlit Cloud</strong>. The complete DevOps pipeline from GitHub to production has
+                        been implemented with professional-grade architecture, security, and explainability components
+                        (Grad-CAM & PySpark).
                     </p>
 
                     <div class="achievement-grid">
                         <div class="achievement">
                             <div class="achievement-icon">🚀</div>
-                            <div class="achievement-text"><strong>AWS EC2 Deployed</strong> on t3.medium instance</div>
+                            <div class="achievement-text"><strong>Dual Deployment</strong> on AWS EC2 & Streamlit Cloud
+                            </div>
                         </div>
                         <div class="achievement">
                             <div class="achievement-icon">🌐</div>
@@ -1061,7 +1292,7 @@
     <div class="nav-container">
         <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Prev</button>
         <div class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
         </div>
         <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
     </div>
@@ -1071,7 +1302,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 9;
+        const totalSlides = 12;
         const slides = document.querySelectorAll('.slide');
 
         function showSlide(n) {
@@ -1101,9 +1332,9 @@
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             } else {
-                elem.requestFullscreen?.() || 
-                elem.webkitRequestFullscreen?.() || 
-                elem.msRequestFullscreen?.();
+                elem.requestFullscreen?.() ||
+                    elem.webkitRequestFullscreen?.() ||
+                    elem.msRequestFullscreen?.();
             }
         }
 
@@ -1125,4 +1356,5 @@
         showSlide(currentSlide);
     </script>
 </body>
+
 </html>

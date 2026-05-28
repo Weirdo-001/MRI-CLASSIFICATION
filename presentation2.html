@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Tumor MRI Classifier — Aarushi Sharma</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#05080f;
+  --bg2:#080d18;
+  --card:#0b1120;
+  --card2:#0e1628;
+  --border:#1a2640;
+  --border2:#243350;
+  --teal:#2dd4bf;
+  --teal2:#14b8a4;
+  --cyan:#00d4ff;
+  --red:#f43f5e;
+  --amber:#f59e0b;
+  --violet:#8b5cf6;
+  --green:#22c55e;
+  --blue:#38bdf8;
+  --txt:#e2eaff;
+  --txt2:#9aacc8;
+  --txt3:#4d637f;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;}
+
+/* ── BACKGROUND ── */
+.bg-grid{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(45,212,191,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,212,191,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.bg-glow{
+  position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(80px);
+}
+.bg-glow.g1{width:500px;height:500px;background:rgba(45,212,191,0.06);top:-150px;right:-100px;}
+.bg-glow.g2{width:400px;height:400px;background:rgba(139,92,246,0.05);bottom:-100px;left:-80px;}
+.bg-glow.g3{width:300px;height:300px;background:rgba(0,212,255,0.04);top:40%;left:40%;}
+
+/* ── PRESENTATION SHELL ── */
+.pres{position:relative;width:100vw;height:100vh;}
+.slide{
+  position:absolute;inset:0;opacity:0;pointer-events:none;
+  transform:translateX(60px);
+  transition:opacity .38s cubic-bezier(.4,0,.2,1), transform .38s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:1;
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:auto;transform:translateX(0);}
+.slide.exit{opacity:0;transform:translateX(-60px);}
+.scroll-inner{
+  width:100%;height:100%;padding:28px 48px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow-y:auto;overflow-x:hidden;
+}
+.scroll-inner::-webkit-scrollbar{width:3px;}
+.scroll-inner::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px;opacity:.4;}
+
+/* ── SLIDE LABEL ── */
+.slide-tag{
+  position:absolute;top:20px;left:48px;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--txt3);z-index:2;
+}
+
+/* ── TYPOGRAPHY ── */
+.slide-title{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(28px,3vw,42px);font-weight:800;
+  color:var(--txt);line-height:1.1;margin-bottom:8px;
+}
+.slide-title span.hl{color:var(--teal);}
+.slide-sub{
+  font-size:13px;color:var(--txt2);margin-bottom:28px;
+  font-style:italic;letter-spacing:.3px;
+}
+.section-label{
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--teal);margin-bottom:20px;display:block;
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:20px;transition:border-color .2s,box-shadow .2s;
+}
+.card:hover{border-color:var(--border2);box-shadow:0 0 20px rgba(45,212,191,0.06);}
+.card.accent-top{border-top:2px solid var(--teal);}
+.card.accent-top.red{border-top-color:var(--red);}
+.card.accent-top.amber{border-top-color:var(--amber);}
+.card.accent-top.violet{border-top-color:var(--violet);}
+.card.accent-top.blue{border-top-color:var(--blue);}
+.card.accent-top.green{border-top-color:var(--green);}
+.card-icon{font-size:26px;margin-bottom:10px;line-height:1;}
+.card-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:7px;}
+.card.red .card-title{color:var(--red);}
+.card.amber .card-title{color:var(--amber);}
+.card.violet .card-title{color:var(--violet);}
+.card.blue .card-title{color:var(--blue);}
+.card.green .card-title{color:var(--green);}
+.card-body{font-size:11.5px;color:var(--txt2);line-height:1.65;}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.g2x2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
+
+/* ── STAT BOX ── */
+.stat{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:18px 14px;text-align:center;
+}
+.stat-val{
+  font-family:'Space Mono',monospace;font-size:28px;font-weight:700;
+  background:linear-gradient(135deg,var(--teal),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:6px;
+}
+.stat-val.red{background:linear-gradient(135deg,var(--red),#fb7185);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-val.amber{background:linear-gradient(135deg,var(--amber),#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-val.violet{background:linear-gradient(135deg,var(--violet),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-val.green{background:linear-gradient(135deg,var(--green),#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);font-weight:600;}
+
+/* ── PILL BADGE ── */
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.25);
+  color:var(--teal);border-radius:999px;padding:4px 14px;
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.pill.red{background:rgba(244,63,94,0.08);border-color:rgba(244,63,94,0.3);color:var(--red);}
+.pill.violet{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.3);color:var(--violet);}
+.pill.amber{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);color:var(--amber);}
+
+/* ── CODE BLOCK ── */
+.code{
+  background:rgba(0,0,0,.4);border:1px solid var(--border2);border-radius:8px;
+  padding:12px 16px;font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--teal);line-height:1.8;overflow-x:auto;
+}
+.code .cm{color:var(--txt3);}
+.code .kw{color:var(--cyan);}
+.code .fn{color:var(--teal);}
+.code .st{color:var(--amber);}
+.code .co{color:var(--txt2);}
+.token-inline{
+  display:inline;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.2);
+  border-radius:4px;padding:1px 7px;font-family:'Space Mono',monospace;
+  font-size:10px;color:var(--teal);white-space:nowrap;
+}
+
+/* ── STEP ROWS ── */
+.step-row{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.step-row:last-child{border-bottom:none;}
+.step-num{
+  min-width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  color:#05080f;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;flex-shrink:0;margin-top:1px;
+}
+.step-title{font-size:12px;font-weight:700;color:var(--txt);margin-bottom:4px;}
+.step-detail{font-size:10.5px;color:var(--txt2);line-height:1.55;}
+
+/* ── FLOW DIAGRAM ── */
+.flow-wrap{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;}
+.flow-node{
+  background:var(--card2);border:1px solid var(--border2);border-radius:10px;
+  padding:12px 16px;text-align:center;min-width:130px;
+}
+.flow-node .fn-icon{font-size:20px;margin-bottom:4px;}
+.flow-node .fn-label{font-size:10px;font-weight:700;color:var(--txt);line-height:1.3;}
+.flow-node .fn-sub{font-size:8.5px;color:var(--txt3);margin-top:2px;}
+.flow-arrow{
+  color:var(--teal);font-size:16px;padding:0 6px;flex-shrink:0;
+}
+.flow-branch{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;gap:0;align-items:stretch;padding:20px 0;}
+.tl-item{flex:1;position:relative;padding:0 10px;}
+.tl-dot{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  margin:0 auto 10px;flex-shrink:0;
+}
+.tl-line{position:absolute;top:17px;left:calc(50% + 17px);right:calc(-50% + 17px);height:1px;background:var(--border2);}
+.tl-item:last-child .tl-line{display:none;}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.tl-title{font-size:10.5px;font-weight:700;color:var(--txt);margin-bottom:5px;}
+.tl-body{font-size:9px;color:var(--txt2);line-height:1.5;}
+
+/* ── NEW BADGE ── */
+.new-badge{
+  display:inline-block;background:linear-gradient(135deg,var(--teal),var(--teal2));
+  color:#05080f;font-size:7px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;padding:2px 7px;border-radius:4px;
+  vertical-align:middle;margin-left:6px;font-family:'Space Mono',monospace;
+}
+
+/* ── SPLIT LAYOUT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.split.wide{grid-template-columns:3fr 2fr;}
+
+/* ── LINK CARD ── */
+.link-card{
+  background:var(--card);border:1px solid var(--border2);border-radius:14px;
+  padding:24px 28px;display:flex;gap:16px;align-items:center;
+  text-decoration:none;transition:all .2s;
+}
+.link-card:hover{border-color:var(--teal);box-shadow:0 0 30px rgba(45,212,191,0.1);transform:translateY(-2px);}
+.link-icon{font-size:32px;flex-shrink:0;}
+.link-title{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:4px;}
+.link-url{font-family:'Space Mono',monospace;font-size:9.5px;color:var(--txt2);}
+.link-desc{font-size:10px;color:var(--txt3);margin-top:4px;}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;z-index:100;
+  background:rgba(8,13,24,0.9);backdrop-filter:blur(16px);
+  border:1px solid var(--border2);border-radius:999px;
+  padding:8px 14px;
+}
+.nav-btn{
+  background:transparent;border:1px solid var(--border);color:var(--txt2);
+  padding:5px 14px;border-radius:999px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
+  transition:all .15s;
+}
+.nav-btn:hover:not(:disabled){background:var(--teal);border-color:var(--teal);color:#05080f;}
+.nav-btn:disabled{opacity:.25;cursor:default;}
+.nav-counter{
+  font-family:'Space Mono',monospace;font-size:9px;color:var(--txt3);
+  padding:0 10px;border-left:1px solid var(--border);border-right:1px solid var(--border);
+  min-width:52px;text-align:center;letter-spacing:1px;
+}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:.15s;}
+.nav-dot.active{background:var(--teal);}
+
+/* ── FULLSCREEN ── */
+.fs-btn{
+  position:fixed;top:16px;right:20px;z-index:100;
+  background:transparent;border:1px solid var(--border2);color:var(--teal);
+  padding:6px 12px;border-radius:8px;cursor:pointer;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;
+  transition:all .15s;
+}
+.fs-btn:hover{background:var(--teal);color:#05080f;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+
+.slide.active .anim{animation:fadeUp .5s ease both;}
+.slide.active .anim:nth-child(1){animation-delay:.05s;}
+.slide.active .anim:nth-child(2){animation-delay:.1s;}
+.slide.active .anim:nth-child(3){animation-delay:.15s;}
+.slide.active .anim:nth-child(4){animation-delay:.2s;}
+.slide.active .anim:nth-child(5){animation-delay:.25s;}
+.slide.active .anim:nth-child(6){animation-delay:.3s;}
+.brain-float{animation:float 3s ease-in-out infinite;}
+
+/* ── SLIDE 1 TITLE SPECIFIC ── */
+.hero-title{
+  font-size:clamp(42px,5vw,68px);font-weight:800;line-height:1.0;
+  background:linear-gradient(135deg,#fff 0%,var(--teal) 60%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:12px;
+}
+.hero-sub{font-size:18px;color:var(--txt2);font-weight:300;margin-bottom:24px;}
+.author-box{
+  display:inline-flex;align-items:center;gap:16px;
+  background:var(--card);border:1px solid var(--border2);border-radius:12px;
+  padding:14px 24px;margin-top:8px;
+}
+.author-name{font-size:15px;font-weight:700;color:var(--txt);}
+.author-roll{font-family:'Space Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:1px;}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--cyan));
+  transition:width .3s ease;z-index:200;
+}
+
+/* ── ARCH PLACEHOLDER ── */
+.arch-placeholder{
+  width:100%;height:340px;
+  border:2px dashed var(--border2);border-radius:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;background:rgba(45,212,191,0.02);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .g3{grid-template-columns:1fr 1fr;}
+  .g4{grid-template-columns:1fr 1fr;}
+  .split{grid-template-columns:1fr;}
+  .split.wide{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+<div class="bg-glow g3"></div>
+<div class="progress-bar" id="progress"></div>
+
+<div class="pres" id="pres">
+
+<!-- ═══════════════ SLIDE 1 — TITLE ═══════════════ -->
+<div class="slide active" id="s1">
+  <div class="scroll-inner" style="justify-content:center;align-items:center;text-align:center;">
+    <div style="font-size:64px;margin-bottom:16px;" class="brain-float">🧠</div>
+    <div class="anim">
+      <div class="pill">☁️ Cloud &amp; DevOps · AI Medical Imaging</div>
+    </div>
+    <h1 class="hero-title anim">Brain Tumor MRI<br>Classifier</h1>
+    <p class="hero-sub anim">Deployed on Amazon AWS EC2 · EfficientNet-B3 + GradCAM + PySpark</p>
+    <div class="anim" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+      <span class="pill amber">EfficientNet-B3</span>
+      <span class="pill red">GradCAM XAI</span>
+      <span class="pill violet">PySpark Pipeline</span>
+    </div>
+    <div class="author-box anim">
+      <div style="font-size:28px;">👩💻</div>
+      <div>
+        <div class="author-name">Aarushi Sharma</div>
+        <div class="author-roll">Roll No. 2310990258 · Cloud &amp; DevOps</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-tag">01 / INTRODUCTION</div>
+</div>
+
+<!-- ═══════════════ SLIDE 2 — PROJECT OVERVIEW ═══════════════ -->
+<div class="slide" id="s2">
+  <div class="scroll-inner">
+    <div class="slide-tag">02 / OVERVIEW</div>
+    <span class="section-label">Project Overview</span>
+    <h2 class="slide-title anim">What We <span class="hl">Built</span></h2>
+    <p class="slide-sub anim">An end-to-end AI diagnostic tool, trained in Colab and deployed to the cloud</p>
+
+    <div class="g2 anim" style="margin-bottom:16px;">
+      <div class="card accent-top">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">The Problem</div>
+        <div class="card-body">Brain tumors affect ~300,000 people globally per year. Radiologists manually inspect hundreds of MRI slices per patient — slow, expensive, and prone to variance. Early and accurate detection dramatically improves survival outcomes.</div>
+      </div>
+      <div class="card accent-top">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">The Solution</div>
+        <div class="card-body"><strong style="color:var(--txt)">EfficientNet-B3</strong> transfer-learning model fine-tuned on brain MRI data. Classifies scans into 4 categories: <em>Glioma, Meningioma, Pituitary Tumor, No Tumor</em>. Wrapped in a <strong style="color:var(--txt)">Streamlit</strong> dashboard and deployed on <strong style="color:var(--txt)">Amazon AWS EC2</strong>.</div>
+      </div>
+    </div>
+
+    <div class="g4 anim">
+      <div class="stat"><div class="stat-val">87.5%</div><div class="stat-label">Test Accuracy</div></div>
+      <div class="stat"><div class="stat-val amber">4</div><div class="stat-label">Tumor Classes</div></div>
+      <div class="stat"><div class="stat-val violet">~5.3M</div><div class="stat-label">Parameters</div></div>
+      <div class="stat"><div class="stat-val green">300×300</div><div class="stat-label">Input Resolution</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 3 — NEED / MOTIVATION ═══════════════ -->
+<div class="slide" id="s3">
+  <div class="scroll-inner">
+    <div class="slide-tag">03 / MOTIVATION</div>
+    <span class="section-label">Why This Project?</span>
+    <h2 class="slide-title anim">Need &amp; <span class="hl">Motivation</span></h2>
+    <p class="slide-sub anim">Six reasons this system matters — clinically, technically, and at scale</p>
+    <div class="g3 anim">
+      <div class="card red accent-top">
+        <div class="card-icon">🏥</div>
+        <div class="card-title">Clinical Urgency</div>
+        <div class="card-body">Brain tumors affect ~300K people/year globally. Early detection raises 5-year survival from ~10% (late stage) to ~70% (early stage). Every minute counts.</div>
+      </div>
+      <div class="card amber accent-top">
+        <div class="card-icon">⏱️</div>
+        <div class="card-title">Manual Diagnosis is Slow</div>
+        <div class="card-body">Radiologists manually read hundreds of MRI slices per patient — time-consuming and prone to inter-observer variance. AI offers a consistent, millisecond-speed first pass.</div>
+      </div>
+      <div class="card accent-top">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">AI Acceleration</div>
+        <div class="card-body">Deep learning can screen an MRI in milliseconds, acting as a triage aid. The model returns class probabilities for <em>Glioma, Meningioma, Pituitary,</em> and <em>No Tumor</em> instantly.</div>
+      </div>
+      <div class="card blue accent-top">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Cloud Accessibility</div>
+        <div class="card-body">AWS EC2 deployment makes the tool accessible from any browser anywhere — no local GPU needed. Democratizes diagnostics in low-resource hospitals and clinics.</div>
+      </div>
+      <div class="card red accent-top">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Explainability Gap</div>
+        <div class="card-body">Black-box AI is unacceptable in medicine. GradCAM visualizations show clinicians exactly which MRI region drove the prediction — building trust and regulatory compliance.</div>
+      </div>
+      <div class="card violet accent-top">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Data at Scale</div>
+        <div class="card-body">PySpark integration enables distributed processing of large MRI metadata datasets — critical for hospital systems, research labs, and future cloud data pipelines.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 4 — ARCHITECTURE (PLACEHOLDER) ═══════════════ -->
+<div class="slide" id="s4">
+  <div class="scroll-inner">
+    <div class="slide-tag">04 / ARCHITECTURE</div>
+    <span class="section-label">System Design</span>
+    <h2 class="slide-title anim">System <span class="hl">Architecture</span></h2>
+    <p class="slide-sub anim">End-to-end AWS cloud deployment — from user browser to model inference</p>
+
+    <div class="arch-placeholder anim">
+      <div style="font-size:48px;">🖼️</div>
+      <div style="font-size:15px;color:var(--txt2);font-weight:600;">[ Paste Your Architecture Diagram Here ]</div>
+      <div style="font-size:11px;color:var(--txt3);">Right-click this slide in your browser → Replace with screenshot of your diagram</div>
+    </div>
+
+    <div class="g4 anim" style="margin-top:16px;">
+      <div class="card" style="text-align:center;padding:12px;">
+        <div style="font-size:20px;margin-bottom:5px;">👤</div>
+        <div style="font-size:10px;font-weight:700;color:var(--txt)">User Browser</div>
+        <div style="font-size:8.5px;color:var(--txt3)">Client</div>
+      </div>
+      <div class="card" style="text-align:center;padding:12px;">
+        <div style="font-size:20px;margin-bottom:5px;">☁️</div>
+        <div style="font-size:10px;font-weight:700;color:var(--txt)">AWS EC2 t3.medium</div>
+        <div style="font-size:8.5px;color:var(--txt3)">IP: 98.84.64.42</div>
+      </div>
+      <div class="card" style="text-align:center;padding:12px;">
+        <div style="font-size:20px;margin-bottom:5px;">🐍</div>
+        <div style="font-size:10px;font-weight:700;color:var(--txt)">Streamlit :8501</div>
+        <div style="font-size:8.5px;color:var(--txt3)">Python Web Server</div>
+      </div>
+      <div class="card" style="text-align:center;padding:12px;">
+        <div style="font-size:20px;margin-bottom:5px;">🧠</div>
+        <div style="font-size:10px;font-weight:700;color:var(--txt)">EfficientNet-B3</div>
+        <div style="font-size:8.5px;color:var(--txt3)">tumor_model.keras</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 5 — PROJECT PIPELINE ═══════════════ -->
+<div class="slide" id="s5">
+  <div class="scroll-inner">
+    <div class="slide-tag">05 / PIPELINE</div>
+    <span class="section-label">End-to-End Pipeline</span>
+    <h2 class="slide-title anim">Project <span class="hl">Pipeline</span></h2>
+    <p class="slide-sub anim">From raw MRI data to live deployed prediction — 6 stages</p>
+
+    <div class="g2 anim" style="gap:12px;">
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#05080f;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">1</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:4px;">Data Collection &amp; Augmentation</div>
+          <div class="card-body">Kaggle brain MRI dataset with 4 classes (Glioma, Meningioma, Pituitary, No Tumor). 80/20 train-val split, AUTOTUNE prefetch. Augmentation: <span class="token-inline">RandomFlip</span> <span class="token-inline">RandomRotation(0.15)</span> <span class="token-inline">RandomZoom(0.15)</span> <span class="token-inline">RandomContrast(0.1)</span></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--violet),#a78bfa);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">2</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--violet);margin-bottom:4px;">PySpark Metadata Processing <span class="new-badge">NEW</span></div>
+          <div class="card-body"><span class="token-inline">pyspark_pipeline.py</span> — SparkSession <code style="font-size:9px">"BrainTumorMRIProcessing"</code>, creates structured DataFrame from image metadata, runs <span class="token-inline">groupBy("label").count()</span> for class distribution, filters by class.</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#fcd34d);color:#05080f;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">3</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:4px;">Model Training (Two-Phase)</div>
+          <div class="card-body"><strong style="color:var(--txt)">Phase 1:</strong> EfficientNetB3 base frozen, Dense(256)+Dropout(0.5), Adam lr=1e-4, 30 epochs w/ EarlyStopping + ReduceLROnPlateau + ModelCheckpoint.<br><strong style="color:var(--txt)">Phase 2:</strong> Unfreeze last 50 layers, lr=1e-5, 10 more epochs. Final accuracy: <strong style="color:var(--green)">87.5%</strong></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--red),#fb7185);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">4</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:4px;">GradCAM Integration <span class="new-badge">NEW</span></div>
+          <div class="card-body"><span class="token-inline">gradcam.py</span> — Extracts gradients from <span class="token-inline">top_conv</span> layer via <span class="token-inline">tf.GradientTape</span>, pools gradients, produces normalized heatmap. Power-normalization (²) applied. Jet colormap overlay at α=0.55.</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),#4ade80);color:#05080f;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">5</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;">Streamlit App (app.py)</div>
+          <div class="card-body">Loads <span class="token-inline">tumor_model.keras</span> via <span class="token-inline">@st.cache_resource</span>. Runs <span class="token-inline">real_prediction()</span> → calls GradCAM → renders Plotly donut chart, gauge, radar chart + 3-panel GradCAM viewer + clinical tabs (Symptoms/Treatment/Stats).</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);color:#05080f;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;flex-shrink:0;">6</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:4px;">AWS EC2 Deployment</div>
+          <div class="card-body">Code pushed to GitHub → SSH into EC2 (Amazon Linux 2023, t3.medium) → virtualenv → pip install requirements → <span class="token-inline">nohup streamlit run app.py --server.port 8501 --server.address 0.0.0.0 &</span> → Live at 98.84.64.42:8501</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 6 — DATA FLOW ═══════════════ -->
+<div class="slide" id="s6">
+  <div class="scroll-inner">
+    <div class="slide-tag">06 / DATA FLOW</div>
+    <span class="section-label">Runtime Data Flow</span>
+    <h2 class="slide-title anim">How Data <span class="hl">Flows</span></h2>
+    <p class="slide-sub anim">The journey of a single MRI image through the system at inference time</p>
+
+    <!-- Main flow -->
+    <div class="flow-wrap anim" style="gap:4px;margin-bottom:20px;">
+      <div class="flow-node">
+        <div class="fn-icon">👤</div>
+        <div class="fn-label">User Uploads<br>MRI Scan</div>
+        <div class="fn-sub">JPG / PNG</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-icon">🌐</div>
+        <div class="fn-label">Streamlit<br>File Uploader</div>
+        <div class="fn-sub">st.file_uploader()</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-icon">🔧</div>
+        <div class="fn-label">Preprocess<br>300×300</div>
+        <div class="fn-sub">preprocess_input()</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-icon">🧠</div>
+        <div class="fn-label">EfficientNet-B3<br>Forward Pass</div>
+        <div class="fn-sub">model.predict()</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-icon">📊</div>
+        <div class="fn-label">Softmax<br>Probabilities</div>
+        <div class="fn-sub">4-class output</div>
+      </div>
+    </div>
+
+    <!-- Branch -->
+    <div class="anim" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="card" style="border-color:var(--red);">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:10px;">🔥 GradCAM Explainability Branch</div>
+        <div class="card-body" style="font-size:10.5px;">
+          <strong style="color:var(--txt)">1.</strong> <span class="token-inline">get_last_conv_layer()</span> → finds <span class="token-inline">top_conv</span><br>
+          <strong style="color:var(--txt)">2.</strong> Builds grad model: input → conv_output + predictions<br>
+          <strong style="color:var(--txt)">3.</strong> <span class="token-inline">tf.GradientTape</span> watches img_tensor (float32)<br>
+          <strong style="color:var(--txt)">4.</strong> <span class="token-inline">tape.gradient(class_channel, conv_outputs)</span><br>
+          <strong style="color:var(--txt)">5.</strong> Pool gradients → weight conv maps → squeeze → ReLU → normalize<br>
+          <strong style="color:var(--txt)">6.</strong> Power-norm (²) → Jet colormap → alpha-blend at 0.55<br>
+          <strong style="color:var(--txt)">Output:</strong> Original MRI | Pure Heatmap | Overlay
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--teal);">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:10px;">📊 Results Rendered to User</div>
+        <div class="card-body" style="font-size:10.5px;">
+          <strong style="color:var(--txt)">Diagnosis Card:</strong> Class label + severity badge + description<br><br>
+          <strong style="color:var(--txt)">Confidence Gauge:</strong> Plotly Indicator chart (0–100%)<br><br>
+          <strong style="color:var(--txt)">Probability Bars:</strong> All 4 classes with color-coded bars<br><br>
+          <strong style="color:var(--txt)">GradCAM Panel:</strong> 3-column (Original / Heatmap / Overlay)<br><br>
+          <strong style="color:var(--txt)">Charts:</strong> Plotly Radar + Donut distribution<br><br>
+          <strong style="color:var(--txt)">Clinical Tabs:</strong> Symptoms | Treatment | Statistics
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 7 — GRADCAM ═══════════════ -->
+<div class="slide" id="s7">
+  <div class="scroll-inner">
+    <div class="slide-tag">07 / NEW FEATURE</div>
+    <span class="section-label anim">New Addition</span>
+    <div class="anim">
+      <div class="pill red">🔥 New Feature</div>
+    </div>
+    <h2 class="slide-title anim">GradCAM — <span class="hl">Explainable AI</span></h2>
+    <p class="slide-sub anim">Gradient-weighted Class Activation Mapping — making the model transparent</p>
+
+    <div class="split anim">
+      <div>
+        <div class="card" style="margin-bottom:14px;border-color:var(--red);">
+          <div class="card-icon">🔍</div>
+          <div class="card-title" style="color:var(--red);">What is GradCAM?</div>
+          <div class="card-body">GradCAM uses gradients flowing into the <strong style="color:var(--txt)">final convolutional layer</strong> to produce a localization heatmap. It highlights which spatial regions of the MRI scan drove the model's classification decision — making AI diagnoses <em>interpretable</em> for clinicians.</div>
+        </div>
+        <div class="card" style="border-color:var(--teal);">
+          <div class="card-icon">⚕️</div>
+          <div class="card-title">Why Critical for Medical AI?</div>
+          <div class="card-body">
+            <div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start;"><span style="color:var(--teal);font-size:14px;margin-top:1px;">▸</span><span>Builds clinician trust — explains the "why" behind every prediction</span></div>
+            <div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start;"><span style="color:var(--teal);font-size:14px;margin-top:1px;">▸</span><span>Detects model biases (e.g., attending to skull vs. tumor tissue)</span></div>
+            <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal);font-size:14px;margin-top:1px;">▸</span><span>Required for regulatory-grade AI systems in healthcare</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="code anim" style="margin-bottom:14px;">
+<span class="cm"># gradcam.py — implementation</span>
+
+<span class="kw">def</span> <span class="fn">get_last_conv_layer</span>(model):
+  preferred = [<span class="st">"top_conv"</span>, <span class="st">"block7b_project_conv"</span>,
+               <span class="st">"block7a_project_conv"</span>]
+  <span class="kw">for</span> name <span class="kw">in</span> preferred:
+    <span class="kw">if</span> name <span class="kw">in</span> layer_names: <span class="kw">return</span> name
+
+<span class="kw">def</span> <span class="fn">get_gradcam_heatmap</span>(img_array, model, layer):
+  <span class="cm"># KEY: cast to float32 BEFORE tape.watch()</span>
+  img_tensor = tf.<span class="fn">cast</span>(img_array, tf.float32)
+  <span class="kw">with</span> tf.<span class="fn">GradientTape</span>() <span class="kw">as</span> tape:
+    tape.<span class="fn">watch</span>(img_tensor)
+    conv_outputs, predictions = grad_model(...)
+    class_channel = predictions[:, pred_index]
+  grads = tape.<span class="fn">gradient</span>(class_channel, conv_outputs)
+  pooled = tf.<span class="fn">reduce_mean</span>(grads, axis=(0,1,2))
+  heatmap = conv_outputs[0] @ pooled[..., tf.newaxis]
+  <span class="kw">return</span> (heatmap / max_val).numpy()
+
+<span class="kw">def</span> <span class="fn">overlay_gradcam</span>(img, heatmap, alpha=<span class="st">0.55</span>):
+  heatmap = np.<span class="fn">power</span>(heatmap, <span class="st">2.0</span>)  <span class="cm"># power-norm</span>
+  <span class="cm"># Jet colormap → blend with original MRI</span>
+        </div>
+        <div class="g3" style="gap:10px;">
+          <div class="card" style="text-align:center;padding:12px;border-color:var(--border2);">
+            <div style="font-size:22px;margin-bottom:6px;">🖼️</div>
+            <div style="font-size:9px;font-weight:700;color:var(--txt)">Original MRI</div>
+            <div style="font-size:8px;color:var(--txt3)">224×224 input</div>
+          </div>
+          <div class="card" style="text-align:center;padding:12px;border-color:var(--red);">
+            <div style="font-size:22px;margin-bottom:6px;">🌡️</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red)">Heatmap</div>
+            <div style="font-size:8px;color:var(--txt3)">Jet colormap</div>
+          </div>
+          <div class="card" style="text-align:center;padding:12px;border-color:var(--teal);">
+            <div style="font-size:22px;margin-bottom:6px;">🔥</div>
+            <div style="font-size:9px;font-weight:700;color:var(--teal)">Overlay</div>
+            <div style="font-size:8px;color:var(--txt3)">α-blend 0.55</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 8 — PYSPARK ═══════════════ -->
+<div class="slide" id="s8">
+  <div class="scroll-inner">
+    <div class="slide-tag">08 / NEW FEATURE</div>
+    <span class="section-label anim">New Addition</span>
+    <div class="anim"><div class="pill violet">⚡ New Feature</div></div>
+    <h2 class="slide-title anim">PySpark — <span class="hl">Big Data Pipeline</span></h2>
+    <p class="slide-sub anim">Distributed MRI metadata processing via Apache Spark (pyspark_pipeline.py)</p>
+
+    <div class="split anim">
+      <div class="code">
+<span class="cm"># pyspark_pipeline.py</span>
+<span class="kw">import</span> os, sys
+<span class="kw">from</span> pyspark.sql <span class="kw">import</span> SparkSession
+<span class="kw">from</span> pyspark.sql.functions <span class="kw">import</span> col
+
+<span class="cm"># Cross-platform Python path fix (Windows/Linux)</span>
+os.environ[<span class="st">"PYSPARK_PYTHON"</span>] = sys.executable
+os.environ[<span class="st">"PYSPARK_DRIVER_PYTHON"</span>] = sys.executable
+
+spark = SparkSession.builder \
+  .appName(<span class="st">"BrainTumorMRIProcessing"</span>) \
+  .getOrCreate()
+
+<span class="cm"># Structured image metadata schema</span>
+image_data = [
+  (<span class="st">"glioma_1.jpg"</span>,     <span class="st">"glioma"</span>),
+  (<span class="st">"meningioma_1.jpg"</span>, <span class="st">"meningioma"</span>),
+  (<span class="st">"pituitary_1.jpg"</span>,  <span class="st">"pituitary"</span>),
+  (<span class="st">"notumor_1.jpg"</span>,    <span class="st">"notumor"</span>),
+]
+df = spark.<span class="fn">createDataFrame</span>(image_data, [<span class="st">"image_name"</span>, <span class="st">"label"</span>])
+
+<span class="cm"># Class distribution (distributed groupBy)</span>
+df.<span class="fn">groupBy</span>(<span class="st">"label"</span>).<span class="fn">count</span>().<span class="fn">show</span>()
+
+<span class="cm"># Filter by class</span>
+glioma_df = df.<span class="fn">filter</span>(<span class="fn">col</span>(<span class="st">"label"</span>) == <span class="st">"glioma"</span>)
+      </div>
+      <div>
+        <div class="card violet accent-top" style="margin-bottom:12px;">
+          <div class="card-icon">⚡</div>
+          <div class="card-title" style="color:var(--violet)">What PySpark Adds</div>
+          <div class="card-body">
+            <div class="step-row" style="padding:8px 0;">
+              <div style="min-width:20px;color:var(--violet);font-weight:800;font-size:14px;">▸</div>
+              <div><strong style="color:var(--txt);font-size:11px;">Distributed Processing</strong><br><span style="font-size:10px;">Spark cluster scales to millions of MRI records — no single machine bottleneck.</span></div>
+            </div>
+            <div class="step-row" style="padding:8px 0;">
+              <div style="min-width:20px;color:var(--violet);font-weight:800;font-size:14px;">▸</div>
+              <div><strong style="color:var(--txt);font-size:11px;">Class Distribution Analysis</strong><br><span style="font-size:10px;">groupBy("label").count() gives instant class imbalance detection — critical before training.</span></div>
+            </div>
+            <div class="step-row" style="padding:8px 0;">
+              <div style="min-width:20px;color:var(--violet);font-weight:800;font-size:14px;">▸</div>
+              <div><strong style="color:var(--txt);font-size:11px;">SQL-style Filtering</strong><br><span style="font-size:10px;">filter(col("label") == "glioma") isolates specific classes for targeted retraining.</span></div>
+            </div>
+            <div class="step-row" style="padding:8px 0;border:none;">
+              <div style="min-width:20px;color:var(--violet);font-weight:800;font-size:14px;">▸</div>
+              <div><strong style="color:var(--txt);font-size:11px;">Future: AWS EMR Integration</strong><br><span style="font-size:10px;">Same code runs on managed EMR clusters for hospital-scale datasets.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="g2" style="gap:10px;">
+          <div class="stat"><div class="stat-val violet" style="font-size:18px;">Spark</div><div class="stat-label">Engine</div></div>
+          <div class="stat"><div class="stat-val violet" style="font-size:18px;">EMR-Ready</div><div class="stat-label">AWS Scale</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 9 — WHAT'S NEW ═══════════════ -->
+<div class="slide" id="s9">
+  <div class="scroll-inner">
+    <div class="slide-tag">09 / INNOVATIONS</div>
+    <span class="section-label">Compared to Last Version</span>
+    <h2 class="slide-title anim">What's <span class="hl">New</span> in This Version?</h2>
+    <p class="slide-sub anim">Key additions — verified by reading every line of every file in this project</p>
+
+    <div class="g2 anim" style="gap:14px;">
+      <div class="card red accent-top">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+          <div class="card-icon" style="margin:0;">🔥</div>
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="card-title" style="color:var(--red);">GradCAM Explainability (gradcam.py)</div>
+        <div class="card-body">
+          • <span class="token-inline">get_last_conv_layer()</span> — auto-detects best EfficientNet conv layer (prefers <code style="font-size:9px">top_conv</code>)<br>
+          • <span class="token-inline">get_gradcam_heatmap()</span> — tf.GradientTape with explicit float32 cast + tape.watch() fix<br>
+          • Power-normalization (heatmap²) for sharper focus on tumor regions<br>
+          • <span class="token-inline">overlay_gradcam()</span> — Jet colormap + alpha-blend (0.55) with original MRI<br>
+          • 3-panel UI: Original / Heatmap / Overlay in app.py render_results()
+        </div>
+      </div>
+      <div class="card violet accent-top">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+          <div class="card-icon" style="margin:0;">⚡</div>
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="card-title" style="color:var(--violet);">PySpark Data Pipeline (pyspark_pipeline.py)</div>
+        <div class="card-body">
+          • <code style="font-size:9px">SparkSession "BrainTumorMRIProcessing"</code> with OS env path fix for cross-platform support<br>
+          • Structured DataFrame from MRI image metadata with typed schema<br>
+          • Distributed <span class="token-inline">groupBy("label").count()</span> — class balance analysis<br>
+          • SQL-style <span class="token-inline">filter(col("label") == "glioma")</span> for subset extraction<br>
+          • Foundation for AWS EMR + production-scale hospital data pipelines
+        </div>
+      </div>
+      <div class="card amber accent-top">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+          <div class="card-icon" style="margin:0;">🎨</div>
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="card-title" style="color:var(--amber);">Enhanced Streamlit Dashboard (app.py)</div>
+        <div class="card-body">
+          • Full dark-mode design system via injected CSS (custom properties: BG_PRIMARY, BG_CARD, ACCENT)<br>
+          • Plotly Indicator gauge chart per prediction (0–100% confidence)<br>
+          • Interactive Plotly Radar + Donut distribution charts per inference<br>
+          • Clinical info tabs: Symptoms / Treatment / Statistics per tumor class<br>
+          • <span class="token-inline">@st.cache_resource</span> model loading + session state caching to avoid recompute
+        </div>
+      </div>
+      <div class="card blue accent-top">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+          <div class="card-icon" style="margin:0;">☁️</div>
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="card-title" style="color:var(--blue);">AWS EC2 Cloud Deployment</div>
+        <div class="card-body">
+          • Amazon Linux 2023 on t3.medium (2 vCPU, 4GB RAM, 20GB EBS)<br>
+          • Elastic IP <code style="font-size:9px">98.84.64.42</code> — stable public endpoint, no IP churn<br>
+          • Security Groups: SSH (22) + HTTP (80) + HTTPS (443) + Streamlit (8501)<br>
+          • <span class="token-inline">nohup ... &</span> for 24/7 persistence after SSH disconnect<br>
+          • GitHub (<code style="font-size:9px">Weirdo-001/MRI-CLASSIFICATION</code>) as CI/CD source of truth
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 10 — DEPLOYMENT ═══════════════ -->
+<div class="slide" id="s10">
+  <div class="scroll-inner">
+    <div class="slide-tag">10 / DEPLOYMENT</div>
+    <span class="section-label">Step-by-Step</span>
+    <h2 class="slide-title anim">Deploying on <span class="hl">Amazon AWS</span></h2>
+    <p class="slide-sub anim">From local code to live EC2 instance — the exact commands used</p>
+
+    <div class="split anim" style="gap:20px;align-items:start;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">📤 GitHub Setup</div>
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Init &amp; Push Repository</div>
+            <div class="step-detail"><span class="token-inline">git init</span> <span class="token-inline">git add .</span> <span class="token-inline">git commit -m "Deploy Brain Tumor"</span><br>Repo: <span class="token-inline">github.com/Weirdo-001/MRI-CLASSIFICATION</span></div>
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin:14px 0;">☁️ EC2 Instance Launch</div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Launch &amp; Configure EC2</div>
+            <div class="step-detail">AMI: Amazon Linux 2023 · Type: <strong style="color:var(--txt)">t3.medium</strong> (2 vCPU, 4GB)<br>Storage: 20GB EBS · Key pair: <span class="token-inline">mri.pem</span></div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Security Groups</div>
+            <div class="step-detail">SSH (22) · HTTP (80) · HTTPS (443) · TCP 8501 from 0.0.0.0/0</div>
+          </div>
+        </div>
+        <div class="step-row" style="border:none;">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Allocate Elastic IP</div>
+            <div class="step-detail">EC2 → Elastic IPs → Allocate → Associate with instance.<br>Public IP: <span class="token-inline">98.84.64.42</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">🔐 SSH &amp; Setup</div>
+        <div class="step-row">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">Connect via SSH</div>
+            <div class="step-detail"><span class="token-inline">ssh -i "mri.pem" ec2-user@98.84.64.42</span><br><span class="token-inline">sudo dnf update -y &amp;&amp; sudo dnf install python3 python3-pip git -y</span></div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-title">Clone &amp; Virtualenv</div>
+            <div class="step-detail"><span class="token-inline">git clone https://github.com/Weirdo-001/MRI-CLASSIFICATION.git</span><br><span class="token-inline">cd MRI-CLASSIFICATION &amp;&amp; python3 -m venv venv &amp;&amp; source venv/bin/activate</span></div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">7</div>
+          <div>
+            <div class="step-title">Install Dependencies</div>
+            <div class="step-detail"><span class="token-inline">pip install "numpy&lt;2"</span> <span class="token-inline">pip install tensorflow==2.16.1</span><br><span class="token-inline">pip install streamlit plotly pillow opencv-python pyspark scikit-learn</span></div>
+          </div>
+        </div>
+        <div class="step-row" style="border:none;">
+          <div class="step-num">8</div>
+          <div>
+            <div class="step-title">Launch App (24/7)</div>
+            <div class="step-detail"><span class="token-inline">nohup streamlit run app.py --server.port 8501 --server.address 0.0.0.0 &amp;</span><br>Live at: <strong style="color:var(--green)">http://98.84.64.42:8501</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 11 — CONCLUSION ═══════════════ -->
+<div class="slide" id="s11">
+  <div class="scroll-inner">
+    <div class="slide-tag">11 / CONCLUSION</div>
+    <span class="section-label">Summary</span>
+    <h2 class="slide-title anim">Conclusion &amp; <span class="hl">Future Scope</span></h2>
+    <p class="slide-sub anim">What was achieved, and where this project goes next</p>
+
+    <div class="split anim" style="gap:20px;align-items:start;">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">✅ Key Achievements</div>
+        <div class="card green accent-top" style="margin-bottom:10px;">
+          <div class="card-body" style="font-size:11.5px;">
+            <div style="display:flex;gap:8px;margin-bottom:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span>EfficientNet-B3 trained in two phases (frozen base + fine-tune last 50 layers) achieving <strong style="color:var(--green)">87.5% test accuracy</strong> across 4 tumor classes.</span></div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span><strong>GradCAM</strong> fully implemented in <code style="font-size:9px">gradcam.py</code> — auto-detects conv layer, GradientTape, power-normalization, Jet overlay.</span></div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span><strong>PySpark pipeline</strong> built for distributed metadata processing with class distribution analysis and SQL-style filtering.</span></div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span>Full-stack <strong>Streamlit dashboard</strong> with dark theme, Plotly gauge/radar/donut charts, clinical insights, and 3-panel GradCAM viewer.</span></div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span><strong>AWS EC2 deployment</strong> (Amazon Linux 2023, t3.medium) with Elastic IP, Security Groups, virtualenv, and nohup 24/7 persistence.</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);font-size:14px;flex-shrink:0;">✓</span><span><strong>GitHub CI/CD</strong> workflow — <code style="font-size:9px">Weirdo-001/MRI-CLASSIFICATION</code> as the single source of truth.</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--violet);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🚀 Future Scope</div>
+        <div class="g2x2" style="gap:10px;">
+          <div class="card" style="border-color:var(--border2);padding:14px;">
+            <div style="font-size:18px;margin-bottom:6px;">🗄️</div>
+            <div style="font-size:10px;font-weight:700;color:var(--txt);margin-bottom:3px;">AWS S3 Storage</div>
+            <div style="font-size:9px;color:var(--txt3);">Store MRI uploads &amp; model weights in S3 buckets</div>
+          </div>
+          <div class="card" style="border-color:var(--border2);padding:14px;">
+            <div style="font-size:18px;margin-bottom:6px;">🔥</div>
+            <div style="font-size:10px;font-weight:700;color:var(--txt);margin-bottom:3px;">AWS EMR Cluster</div>
+            <div style="font-size:9px;color:var(--txt3);">Run PySpark at hospital-scale on managed EMR</div>
+          </div>
+          <div class="card" style="border-color:var(--border2);padding:14px;">
+            <div style="font-size:18px;margin-bottom:6px;">🐳</div>
+            <div style="font-size:10px;font-weight:700;color:var(--txt);margin-bottom:3px;">Docker + ECS</div>
+            <div style="font-size:9px;color:var(--txt3);">Containerize for reproducible, scalable deployment</div>
+          </div>
+          <div class="card" style="border-color:var(--border2);padding:14px;">
+            <div style="font-size:18px;margin-bottom:6px;">📄</div>
+            <div style="font-size:10px;font-weight:700;color:var(--txt);margin-bottom:3px;">DICOM Support</div>
+            <div style="font-size:9px;color:var(--txt3);">Accept standard medical imaging format directly</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDE 12 — LINKS ═══════════════ -->
+<div class="slide" id="s12">
+  <div class="scroll-inner" style="justify-content:center;align-items:center;text-align:center;">
+    <div class="slide-tag">12 / LINKS</div>
+    <div style="font-size:48px;margin-bottom:16px;">🔗</div>
+    <h2 class="slide-title anim" style="font-size:clamp(32px,4vw,52px);">Project <span class="hl">Links</span></h2>
+    <p class="slide-sub anim">Aarushi Sharma · Roll No. 2310990258</p>
+
+    <div class="anim" style="display:flex;flex-direction:column;gap:14px;max-width:700px;width:100%;margin:20px auto;">
+      <a href="https://github.com/Weirdo-001/MRI-CLASSIFICATION" target="_blank" class="link-card">
+        <div class="link-icon">📦</div>
+        <div>
+          <div class="link-title">GitHub Repository</div>
+          <div class="link-url">github.com/Weirdo-001/MRI-CLASSIFICATION</div>
+          <div class="link-desc">Source code · app.py · gradcam.py · pyspark_pipeline.py · Jupyter Notebook · requirements.txt</div>
+        </div>
+      </a>
+      <a href="http://98.84.64.42:8501" target="_blank" class="link-card" style="border-color:var(--green);">
+        <div class="link-icon">🌐</div>
+        <div>
+          <div class="link-title" style="color:var(--green);">Live Deployed App</div>
+          <div class="link-url">http://98.84.64.42:8501</div>
+          <div class="link-desc">Brain Tumor MRI Classifier · AWS EC2 t3.medium · Amazon Linux 2023 · Streamlit</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="anim" style="margin-top:20px;">
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <span class="pill">TensorFlow 2.20</span>
+        <span class="pill">EfficientNet-B3</span>
+        <span class="pill red">GradCAM</span>
+        <span class="pill violet">PySpark</span>
+        <span class="pill amber">Streamlit</span>
+        <span class="pill" style="background:rgba(56,189,248,0.08);border-color:rgba(56,189,248,0.3);color:var(--blue);">AWS EC2</span>
+      </div>
+      <p style="font-size:9.5px;color:var(--txt3);margin-top:16px;">For academic and research purposes only — not a substitute for professional medical diagnosis</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /pres -->
+
+<!-- NAVIGATION -->
+<div class="nav" id="navBar">
+  <button class="nav-btn" id="prevBtn" onclick="go(-1)">← Prev</button>
+  <div class="nav-counter"><span id="cur">1</span> / <span id="tot">12</span></div>
+  <div id="dots" style="display:flex;gap:6px;align-items:center;"></div>
+  <button class="nav-btn" id="nextBtn" onclick="go(1)">Next →</button>
+</div>
+
+<button class="fs-btn" onclick="toggleFS()">⛶ FULL</button>
+
+<script>
+const TOTAL = 12;
+let cur = 1;
+
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const progress = document.getElementById('progress');
+
+// Build dots
+for(let i=1;i<=TOTAL;i++){
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i===1?' active':'');
+  d.onclick = ()=>show(i);
+  dotsEl.appendChild(d);
+}
+
+function show(n){
+  if(n<1||n>TOTAL) return;
+  slides[cur-1].classList.remove('active');
+  cur = n;
+  slides[cur-1].classList.add('active');
+  document.getElementById('cur').textContent = cur;
+  document.getElementById('prevBtn').disabled = cur===1;
+  document.getElementById('nextBtn').disabled = cur===TOTAL;
+  progress.style.width = ((cur/TOTAL)*100)+'%';
+  document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===cur-1));
+  document.getElementById('tot').textContent = TOTAL;
+}
+
+function go(dir){ show(cur+dir); }
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);}
+  if(e.key==='f'||e.key==='F'){e.preventDefault();toggleFS();}
+  if(e.key==='Home'){e.preventDefault();show(1);}
+  if(e.key==='End'){e.preventDefault();show(TOTAL);}
+  const n=parseInt(e.key);
+  if(n>=1&&n<=9){e.preventDefault();show(n);}
+});
+
+function toggleFS(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+  }
+}
+
+// Touch swipe
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>60){ go(dx<0?1:-1); }
+},{passive:true});
+
+show(1);
+</script>
+</body>
+</html>

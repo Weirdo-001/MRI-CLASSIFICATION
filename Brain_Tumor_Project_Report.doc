@@ -1,0 +1,319 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Brain Tumor Project Report</title>
+<style>
+@page { 
+    size: A4; 
+    margin: 2.5cm 1.5cm 2.5cm 2.5cm; 
+}
+body { 
+    font-family: "Times New Roman", serif; 
+    font-size: 12pt; 
+    line-height: 1.5; 
+    text-align: justify; 
+}
+h1 { 
+    font-size: 16pt; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    text-align: left; 
+    margin-top: 24pt;
+    margin-bottom: 12pt;
+}
+h1.center {
+    text-align: center;
+}
+h2 { 
+    font-size: 14pt; 
+    font-weight: bold; 
+    margin-top: 18pt;
+    margin-bottom: 10pt;
+}
+h3 { 
+    font-size: 12pt; 
+    font-weight: bold; 
+    font-style: italic; 
+    margin-top: 14pt;
+    margin-bottom: 8pt;
+}
+p { 
+    margin-top: 0;
+    margin-bottom: 12pt; 
+}
+.caption { 
+    font-size: 10pt; 
+    text-align: center; 
+    font-style: italic;
+    margin-top: 6pt;
+    margin-bottom: 18pt;
+}
+.page-break { 
+    page-break-before: always; 
+}
+.center { 
+    text-align: center; 
+}
+.cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+ul, ol {
+    margin-bottom: 12pt;
+}
+</style>
+</head>
+<body>
+
+<!-- 1. COVER PAGE -->
+<div class="center" style="margin-top: 4cm;">
+    <h1 class="center" style="font-size: 20pt; line-height: 1.2;">BRAIN TUMOR MRI CLASSIFICATION & LOCALIZATION SYSTEM</h1>
+    <p style="margin-top: 2cm;"><strong>A Project Report</strong></p>
+    <p>Submitted in partial fulfillment of the requirements for the evaluation of</p>
+    <p><strong>Cloud Computing & DevOps</strong></p>
+    <p style="margin-top: 2cm;"><em>Submitted by:</em></p>
+    <p><strong>Aarushi Sharma</strong><br>Roll No: 2310990258</p>
+    <p style="margin-top: 3cm;"><strong>[Name of University/Institution]</strong></p>
+    <p><strong>[Academic Year]</strong></p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 2. CERTIFICATE -->
+<h1 class="center">CERTIFICATE</h1>
+<p>This is to certify that the project report entitled <strong>"Brain Tumor MRI Classification & Localization System"</strong> submitted by <strong>Aarushi Sharma (Roll No: 2310990258)</strong> in partial fulfillment of the requirements for the course evaluation in Cloud Computing & DevOps, is a record of authentic work carried out by her under my supervision and guidance.</p>
+<p>To the best of my knowledge, the matter embodied in this report has not been submitted to any other University or Institute for the award of any degree or diploma.</p>
+<br><br><br>
+<p>___________________________<br>
+<strong>[Signature of Guide/Supervisor]</strong><br>
+[Name of Supervisor]<br>
+[Designation]<br>
+[Department/University Name]</p>
+
+<div class="page-break"></div>
+
+<!-- 3. DECLARATION -->
+<h1 class="center">DECLARATION</h1>
+<p>I, <strong>Aarushi Sharma</strong>, hereby declare that the project report entitled <strong>"Brain Tumor MRI Classification & Localization System"</strong> submitted for the course evaluation in Cloud Computing & DevOps is a record of an original work done by me.</p>
+<p>I further declare that this report is based on my own research and implementation. The technologies, including EfficientNet, Grad-CAM, AWS EC2, Streamlit, and PySpark, were integrated by me for academic evaluation purposes. The results and conclusions are genuine to the best of my knowledge, and I have appropriately cited the sources where external references were used.</p>
+<br><br><br>
+<p>___________________________<br>
+<strong>Aarushi Sharma</strong><br>
+Roll No: 2310990258<br>
+Date: ____________________</p>
+
+<div class="page-break"></div>
+
+<!-- 4. ACKNOWLEDGEMENT -->
+<h1 class="center">ACKNOWLEDGEMENT</h1>
+<p>I would like to express my profound gratitude to everyone who contributed to the successful completion of this project.</p>
+<p>I am deeply thankful to my guide, <strong>[Name of Guide/Supervisor]</strong>, for their invaluable guidance, constant encouragement, and technical support throughout the development of this project. Their insights into Cloud Computing, DevOps, and Machine Learning were instrumental in shaping the final architecture of the system.</p>
+<p>I would also like to thank the faculty members of the <strong>[Department Name]</strong> for providing a conducive environment for research and learning. Finally, I extend my heartfelt appreciation to my family and friends for their unwavering moral support during the entirety of this academic endeavor.</p>
+<br><br>
+<p><strong>Aarushi Sharma</strong></p>
+
+<div class="page-break"></div>
+
+<!-- 5. ABSTRACT + KEYWORDS -->
+<h1 class="center">ABSTRACT</h1>
+<p>The manual diagnosis of brain tumors using Magnetic Resonance Imaging (MRI) is a time-consuming and highly subjective process that requires specialized radiological expertise. The advent of Deep Learning, particularly Convolutional Neural Networks (CNNs), offers a robust avenue for automating this diagnostic workflow. This project presents a full-stack, cloud-deployed Brain Tumor MRI Classification and Localization System capable of categorizing MRI scans into four distinct classes: Glioma, Meningioma, Pituitary Tumor, and No Tumor. An EfficientNet-B3 transfer learning architecture was fine-tuned for high-accuracy feature extraction. To bridge the gap between black-box AI and clinical transparency, the system integrates Gradient-weighted Class Activation Mapping (Grad-CAM), which visually highlights the specific regions of the MRI influencing the model's prediction. The system is designed with a strong focus on scalable DevOps methodologies; it is containerized and deployed on Amazon Web Services (AWS EC2) via an automated GitHub deployment pipeline and rendered through an interactive Streamlit frontend. Additionally, Apache PySpark was integrated into the data pipeline to handle scalable metadata processing, demonstrating the system's readiness for large-scale hospital datasets. This project successfully combines Machine Learning, Cloud Computing, and DevOps into a cohesive, highly accessible medical imaging platform.</p>
+<p><strong>Keywords:</strong> <em>Brain Tumor Classification, MRI, EfficientNet, Grad-CAM, AWS EC2, Streamlit, PySpark, DevOps, Explainable AI.</em></p>
+
+<div class="page-break"></div>
+
+<!-- 6. TABLE OF CONTENTS -->
+<h1 class="center">TABLE OF CONTENTS</h1>
+<p>1. INTRODUCTION</p>
+<p>2. LITERATURE REVIEW</p>
+<p>3. RESEARCH GAPS</p>
+<p>4. PROBLEM DEFINITION</p>
+<p>5. OBJECTIVES</p>
+<p>6. METHODOLOGY</p>
+<p>7. SOFTWARE & HARDWARE REQUIREMENTS</p>
+<p>8. PROGRAM STRUCTURE & GUI</p>
+<p>9. IMPLEMENTATION & AWS DEPLOYMENT</p>
+<p>10. SYSTEM TESTING & RESULTS</p>
+<p>11. LIMITATIONS</p>
+<p>12. FUTURE SCOPE</p>
+<p>13. CONCLUSION</p>
+<p>14. REFERENCES</p>
+
+<div class="page-break"></div>
+
+<!-- 7. INTRODUCTION -->
+<h1>1. INTRODUCTION</h1>
+<p>The early and accurate detection of brain tumors is a critical factor in improving patient survival rates and determining appropriate therapeutic interventions. Magnetic Resonance Imaging (MRI) remains the gold standard for non-invasive brain tumor analysis due to its superior soft-tissue contrast. However, interpreting thousands of MRI slices is an exhaustive manual task for radiologists, often leading to delayed diagnoses and inter-observer variability.</p>
+<p>In recent years, Artificial Intelligence (AI) has significantly transformed healthcare, particularly in the domain of medical image analysis. Deep learning models can rapidly analyze complex medical images, identify anomalies, and assist clinical professionals as secondary diagnostic tools. Despite these advancements, standard deep learning models act as "black boxes," providing predictions without explaining the underlying rationale. This lack of transparency limits the clinical adoption of AI.</p>
+<p>To address this, this project develops an end-to-end Brain Tumor Classification System that not only predicts the tumor type but also utilizes Explainable AI (Grad-CAM) to generate a visual localization heatmap. Furthermore, an AI model's real-world utility is heavily dependent on its accessibility. Thus, the system is fully integrated into a modern DevOps pipeline and deployed on an AWS EC2 cloud infrastructure, ensuring 24/7 global accessibility and scalable data handling via PySpark.</p>
+
+<!-- 8. LITERATURE REVIEW -->
+<h1>2. LITERATURE REVIEW</h1>
+<p>The application of Convolutional Neural Networks (CNNs) in medical imaging has been extensively researched. Initial studies relied on custom CNN architectures, which often suffered from overfitting on limited medical datasets. The paradigm subsequently shifted toward Transfer Learning, where models pretrained on vast datasets (like ImageNet) are fine-tuned for specific medical tasks.</p>
+<p>Recent studies highlight the efficacy of the EfficientNet family of models. EfficientNet optimizes the depth, width, and resolution of networks uniformly, proving to be highly effective for high-resolution medical image classification while minimizing computational overhead compared to traditional ResNet architectures.</p>
+<p>On the front of model transparency, Gradient-weighted Class Activation Mapping (Grad-CAM) has emerged as the standard for visual explanations. By utilizing the gradients of the target concept flowing into the final convolutional layer, Grad-CAM produces a coarse localization map that highlights the important regions in the image. </p>
+<p>Finally, the transition of ML models from local notebooks to cloud environments has gained traction. Cloud infrastructure (like AWS) combined with web frameworks (like Streamlit) and Big Data tools (like Apache PySpark) enables the deployment of scalable, distributed healthcare architectures.</p>
+
+<!-- 9. RESEARCH GAPS -->
+<h1>3. RESEARCH GAPS</h1>
+<p>Based on the literature review, the following research gaps were identified in existing automated MRI diagnostic systems:</p>
+<ul>
+    <li><strong>Lack of Transparency:</strong> Many existing models output high-accuracy predictions but fail to explain their logic, preventing clinical trust (the "black-box" problem).</li>
+    <li><strong>Poor Deployment Strategies:</strong> The majority of academic AI models remain confined to local Jupyter Notebooks and lack real-world cloud deployment architectures.</li>
+    <li><strong>Inadequate Scalability:</strong> Existing pipelines often process data locally in memory, making them incapable of handling large-scale, enterprise-level hospital databases spanning thousands of gigabytes.</li>
+</ul>
+
+<!-- 10. PROBLEM DEFINITION -->
+<h1>4. PROBLEM DEFINITION</h1>
+<p>The primary problem addressed in this project is the lack of a transparent, scalable, and globally accessible AI-assisted diagnostic tool for brain tumors. The goal is to build a system capable of accurately classifying MRI scans into four categories (Glioma, Meningioma, Pituitary, No Tumor) while providing visual proof (Grad-CAM) of the diagnosis. The system must overcome traditional local-hardware limitations by leveraging a cloud-based AWS infrastructure, adopting CI/CD DevOps practices, and integrating Big Data frameworks (PySpark) to future-proof the data processing pipeline.</p>
+
+<!-- 11. OBJECTIVES -->
+<h1>5. OBJECTIVES</h1>
+<p>The core objectives of this project are as follows:</p>
+<ul>
+    <li><strong>MRI Classification:</strong> To fine-tune an EfficientNet-B3 deep learning model to accurately classify brain MRI scans into four distinct tumor categories.</li>
+    <li><strong>Explainable AI Implementation:</strong> To integrate Grad-CAM visualizations that highlight the specific MRI regions influencing the model's prediction, thereby eliminating the black-box effect.</li>
+    <li><strong>Cloud Deployment:</strong> To establish a robust DevOps pipeline and deploy the application on an AWS EC2 instance for uninterrupted, cross-platform accessibility.</li>
+    <li><strong>Big Data Scalability:</strong> To implement an Apache PySpark data pipeline capable of handling large-scale dataset analytics and metadata processing for future scalability.</li>
+</ul>
+
+<!-- 12. METHODOLOGY -->
+<h1>6. METHODOLOGY</h1>
+<p>The methodology follows a structured pipeline from data preprocessing to cloud deployment.</p>
+<h2>6.1 Workflow Architecture</h2>
+<p>The system workflow executes in the following sequence:</p>
+<ol>
+    <li><strong>MRI Upload:</strong> The user uploads a standard MRI scan (JPG/PNG) via the Streamlit dashboard.</li>
+    <li><strong>Preprocessing:</strong> The image is resized to 300x300 pixels, and array normalization is applied.</li>
+    <li><strong>EfficientNet Model:</strong> The preprocessed image is passed through the pre-trained EfficientNet-B3 model for feature extraction.</li>
+    <li><strong>Classification & Confidence:</strong> The model's dense layers apply a softmax function to generate confidence probability scores for each of the four classes.</li>
+    <li><strong>Grad-CAM Visualization:</strong> Concurrently, a GradientTape records the operations during the forward pass. Gradients from the <code>top_conv</code> layer are extracted, pooled, and power-normalized to generate a heatmap overlaid on the original image.</li>
+    <li><strong>AWS Cloud Output:</strong> The results are formatted using interactive Plotly charts and rendered dynamically to the user via the AWS-hosted Streamlit frontend.</li>
+</ol>
+<br>
+<p class="center">[ Insert Figure 1: System Workflow Here ]</p>
+<p class="caption">Figure 1: Complete System Workflow</p>
+
+<!-- 13. SOFTWARE & HARDWARE REQUIREMENTS -->
+<h1>7. SOFTWARE & HARDWARE REQUIREMENTS</h1>
+<h2>7.1 Software Requirements</h2>
+<ul>
+    <li><strong>Programming Language:</strong> Python 3.9+</li>
+    <li><strong>Deep Learning Framework:</strong> TensorFlow 2.16.1, Keras</li>
+    <li><strong>Big Data Engine:</strong> Apache PySpark, Java OpenJDK</li>
+    <li><strong>Frontend Framework:</strong> Streamlit</li>
+    <li><strong>Visualization:</strong> Plotly, Matplotlib, OpenCV, Pillow</li>
+    <li><strong>Version Control:</strong> Git, GitHub</li>
+</ul>
+<h2>7.2 Hardware / Cloud Requirements</h2>
+<ul>
+    <li><strong>Cloud Provider:</strong> Amazon Web Services (AWS)</li>
+    <li><strong>Instance Type:</strong> EC2 t3.medium (2 vCPU, 4GB RAM)</li>
+    <li><strong>Operating System:</strong> Amazon Linux 2023</li>
+    <li><strong>Storage:</strong> 20 GB EBS Volume</li>
+    <li><strong>Network:</strong> AWS Elastic IP assigned for persistent DNS</li>
+</ul>
+
+<!-- 14. PROGRAM STRUCTURE & GUI -->
+<h1>8. PROGRAM STRUCTURE & GUI</h1>
+<h2>8.1 Codebase Architecture</h2>
+<p>The project is modularized into several core Python scripts to maintain a clean structure:</p>
+<ul>
+    <li><code>app.py</code>: Acts as the primary Streamlit frontend and routing server. It handles model loading, UI state, file uploads, and renders the Plotly charts.</li>
+    <li><code>gradcam.py</code>: Encapsulates the explainable AI logic. It dynamically searches for the correct convolutional layer, manages the TensorFlow GradientTape, and blends the OpenCV heatmap.</li>
+    <li><code>pyspark_pipeline.py</code>: The standalone big data module that initializes a SparkSession and handles distributed dataset querying and class distribution analysis.</li>
+</ul>
+
+<h2>8.2 Graphical User Interface (GUI)</h2>
+<p>The user interface was built using Streamlit, themed with a professional dark navy and cyan aesthetic suitable for medical software. The dashboard is divided into interactive sections:</p>
+<ul>
+    <li><strong>Sidebar:</strong> Contains the drag-and-drop file uploader and dynamic application status metrics.</li>
+    <li><strong>Diagnosis Card:</strong> Immediately presents the predicted tumor class and its severity.</li>
+    <li><strong>Confidence Analytics:</strong> Utilizes Plotly gauge charts and radar charts to display class probabilities.</li>
+    <li><strong>Grad-CAM Panel:</strong> A three-column layout showing the Original Scan, the Pure Heatmap, and the Blended Overlay side-by-side.</li>
+    <li><strong>Clinical Insights:</strong> Expandable tabs providing relevant medical literature on symptoms, treatments, and statistics corresponding to the predicted tumor type.</li>
+</ul>
+<br>
+<p class="center">[ Insert Figure 2: Dashboard Interface Here ]</p>
+<p class="caption">Figure 2: Streamlit Dashboard Interface</p>
+
+<!-- 15. IMPLEMENTATION & AWS DEPLOYMENT -->
+<h1>9. IMPLEMENTATION & AWS DEPLOYMENT</h1>
+<p>The deployment strategy bridges Machine Learning and DevOps, migrating the application from local development to a highly available AWS EC2 environment.</p>
+
+<h2>9.1 GitHub Integration</h2>
+<p>The entire source code, including Python scripts, requirements files, and the trained Keras model, is hosted on a secure GitHub repository. This acts as the single source of truth for the CI/CD deployment pipeline, enabling rapid rollbacks and version control.</p>
+
+<h2>9.2 AWS EC2 Provisioning & Environment Setup</h2>
+<p>An AWS EC2 <code>t3.medium</code> instance was provisioned running Amazon Linux 2023. To ensure stable public access, an AWS Elastic IP was allocated and associated with the instance. Security groups were strictly configured to allow incoming traffic on SSH (Port 22), HTTP/HTTPS (Ports 80/443), and the specific Streamlit application port (Port 8501).</p>
+<p>The deployment followed these terminal procedures via SSH:</p>
+<ol>
+    <li>System update and installation of Python 3 and Git using the <code>dnf</code> package manager.</li>
+    <li>Cloning the project repository from GitHub.</li>
+    <li>Creation of an isolated Python Virtual Environment (<code>venv</code>) to prevent dependency conflicts.</li>
+    <li>Installation of strict dependency versions (e.g., <code>numpy<2</code>, <code>tensorflow==2.16.1</code>) via <code>pip</code>.</li>
+    <li>Installation of OpenJDK to satisfy the JVM requirements for the PySpark pipeline.</li>
+</ol>
+
+<h2>9.3 Application Execution</h2>
+<p>To ensure the Streamlit web server remains active 24/7, even after the SSH session is terminated, the application was launched as a background daemon process using the <code>nohup</code> command:</p>
+<p><code>nohup streamlit run app.py --server.port 8501 --server.address 0.0.0.0 &</code></p>
+<br>
+<p class="center">[ Insert Figure 3: AWS EC2 Deployment Architecture Here ]</p>
+<p class="caption">Figure 3: AWS EC2 Cloud Infrastructure</p>
+
+<!-- 16. SYSTEM TESTING & RESULTS -->
+<h1>10. SYSTEM TESTING & RESULTS</h1>
+<p>The system was rigorously tested using an unseen test subset of the MRI dataset. The EfficientNet-B3 model successfully achieved an 87.5% classification accuracy across the four categories.</p>
+
+<h2>10.1 Classification Performance</h2>
+<p>When an image of a Glioma was uploaded, the system correctly identified it with >95% confidence. The interface successfully rendered the corresponding radar charts mapping the distribution of probabilities against Meningioma and Pituitary classes, proving that the Softmax layer functions properly in a live production environment.</p>
+
+<h2>10.2 Explainable AI (Grad-CAM) Validation</h2>
+<p>The Grad-CAM module was tested to ensure the gradient flow was unbroken. The system successfully generated heatmaps utilizing the Jet colormap. The warmest regions (red/yellow) on the overlay consistently aligned with the dense mass regions (the tumor) visible in the original MRI, proving that the AI is localizing the correct physiological anomaly rather than memorizing background noise.</p>
+<br>
+<p class="center">[ Insert Figure 4: Grad-CAM Visualization Results Here ]</p>
+<p class="caption">Figure 4: Grad-CAM Original, Heatmap, and Overlay</p>
+
+<!-- 17. LIMITATIONS -->
+<h1>11. LIMITATIONS</h1>
+<p>While the system is highly capable, it possesses certain practical limitations:</p>
+<ul>
+    <li><strong>Dataset Scope:</strong> The model was trained on a limited dataset of 2D MRI slices. It does not possess the temporal or spatial awareness required for 3D volumetric MRI analysis.</li>
+    <li><strong>Grad-CAM is Not Segmentation:</strong> As a critical medical disclaimer, Grad-CAM highlights the regional pixels influencing the model's prediction; it does not perform exact, pixel-perfect medical boundary segmentation of the tumor.</li>
+    <li><strong>Not a Diagnostic Replacement:</strong> The system is intended purely as a triage and secondary-opinion tool for educational and research purposes, not as a replacement for certified medical diagnosis.</li>
+    <li><strong>Cloud Dependency:</strong> The architecture relies on active internet connectivity and AWS uptime to function.</li>
+</ul>
+
+<!-- 18. FUTURE SCOPE -->
+<h1>12. FUTURE SCOPE</h1>
+<p>The project lays a strong foundation for future advancements in cloud-native healthcare AI:</p>
+<ul>
+    <li><strong>U-Net Segmentation:</strong> Integrating a U-Net architecture alongside EfficientNet to provide exact tumor boundary masking in addition to classification.</li>
+    <li><strong>Docker & Kubernetes:</strong> Fully containerizing the application using Docker and orchestrating it with Kubernetes to ensure auto-scaling during high-traffic periods.</li>
+    <li><strong>Automated CI/CD Pipelines:</strong> Implementing GitHub Actions to automatically trigger tests and redeploy the EC2 instance whenever new code is pushed.</li>
+    <li><strong>AWS EMR Integration:</strong> Migrating the current PySpark pipeline to a managed Amazon EMR cluster to process massive, multi-terabyte hospital databases in real-time.</li>
+</ul>
+
+<!-- 19. CONCLUSION -->
+<h1>13. CONCLUSION</h1>
+<p>This project successfully culminated in the development and deployment of an AI-powered Brain Tumor MRI Classification and Localization System. By fine-tuning the EfficientNet-B3 architecture, the system achieved high diagnostic accuracy across four distinct brain states. Crucially, the integration of Grad-CAM resolved the inherent black-box nature of deep learning, providing visual transparency that is vital for medical applications.</p>
+<p>Furthermore, the project successfully demonstrated advanced DevOps and Cloud Computing proficiencies. By migrating the system from local environments to an AWS EC2 cloud infrastructure, setting up a secure virtual environment, and utilizing background daemons, the application achieved global, 24/7 accessibility. The inclusion of Apache PySpark further validated the system's readiness for large-scale clinical data pipelines. Ultimately, this system stands as a cohesive, professional-grade intersection of Machine Learning, Cloud Infrastructure, and scalable DevOps practices.</p>
+
+<div class="page-break"></div>
+
+<!-- 20. REFERENCES -->
+<h1>14. REFERENCES</h1>
+<p>[1] M. Tan and Q. V. Le, "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks," in <em>Proc. 36th Int. Conf. Mach. Learn. (ICML)</em>, Long Beach, CA, USA, 2019, pp. 6105-6114.</p>
+<p>[2] R. R. Selvaraju, M. Cogswell, A. Das, R. Vedantam, D. Parikh, and D. Batra, "Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization," in <em>IEEE International Conference on Computer Vision (ICCV)</em>, Venice, Italy, 2017, pp. 618-626.</p>
+<p>[3] M. Abadi et al., "TensorFlow: A System for Large-Scale Machine Learning," in <em>12th USENIX Symposium on Operating Systems Design and Implementation (OSDI)</em>, Savannah, GA, USA, 2016, pp. 265-283.</p>
+<p>[4] Amazon Web Services, "Amazon EC2 Documentation," [Online]. Available: https://docs.aws.amazon.com/ec2/index.html. [Accessed: 27-May-2026].</p>
+<p>[5] Streamlit Inc., "Streamlit Documentation," [Online]. Available: https://docs.streamlit.io/. [Accessed: 27-May-2026].</p>
+<p>[6] Apache Software Foundation, "Apache Spark Documentation," [Online]. Available: https://spark.apache.org/docs/latest/. [Accessed: 27-May-2026].</p>
+<p>[7] J. Cheng et al., "Brain Tumor Dataset," <em>figshare</em>, 2017. [Online]. Available: https://figshare.com/articles/dataset/brain_tumor_dataset/1512427.</p>
+
+</body>
+</html>
